@@ -60,7 +60,7 @@ def _get_loader(file_path: str, file_extension: str):
         from langchain_community.utilities.sql_database import SQLDatabase
         # Create a temporary SQLite engine for the uploaded file
         db = SQLDatabase.from_uri(f"sqlite:///{file_path}")
-        return SQLDatabaseLoader.from_query("SELECT * FROM sqlite_master WHERE type='table'", db)
+        return SQLDatabaseLoader(query="SELECT * FROM sqlite_master WHERE type='table'", db=db)
 
     else:
         from langchain_community.document_loaders import TextLoader
