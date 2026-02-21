@@ -8,6 +8,11 @@ from langchain_core.documents import Document
 
 from rag_app.embeddings import get_embeddings
 
+from chromadb.config import Settings
+
+# Ensure telemetry is disabled before Chroma is initialized
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
+
 PERSIST_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "chroma_db")
 COLLECTION_NAME = "rag_knowledge_base"
 
@@ -21,6 +26,7 @@ def get_vectorstore() -> Chroma:
             collection_name=COLLECTION_NAME,
             embedding_function=get_embeddings(),
             persist_directory=PERSIST_DIR,
+            client_settings=Settings(anonymized_telemetry=False)
         )
     return _vectorstore_instance
 

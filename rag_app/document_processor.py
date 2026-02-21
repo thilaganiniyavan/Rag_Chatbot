@@ -4,11 +4,7 @@ from pathlib import Path
 from typing import List
 
 from langchain_core.documents import Document
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-
-CHUNK_SIZE = 500
-CHUNK_OVERLAP = 25
+from rag_app.agentic_chunker import AgenticChunker
 
 
 def _get_loader(file_path: str, file_extension: str):
@@ -47,6 +43,25 @@ def _get_loader(file_path: str, file_extension: str):
         from langchain_community.document_loaders import UnstructuredExcelLoader
         return UnstructuredExcelLoader(file_path)
 
+    elif ext in ("pptx", "ppt"):
+        from langchain_community.document_loaders import UnstructuredPowerPointLoader
+        return UnstructuredPowerPointLoader(file_path)
+
+    elif ext == "xml":
+        from langchain_community.document_loaders import UnstructuredXMLLoader
+        return UnstructuredXMLLoader(file_path)
+
+    elif ext == "sql":
+        from langchain_community.document_loaders import TextLoader
+        return TextLoader(file_path, encoding="utf-8")
+
+    elif ext == "db":
+        from langchain_community.document_loaders import SQLDatabaseLoader
+        from langchain_community.utilities.sql_database import SQLDatabase
+        # Create a temporary SQLite engine for the uploaded file
+        db = SQLDatabase.from_uri(f"sqlite:///{file_path}")
+        return SQLDatabaseLoader.from_query("SELECT * FROM sqlite_master WHERE type='table'", db)
+
     else:
         from langchain_community.document_loaders import TextLoader
         return TextLoader(file_path, encoding="utf-8")
@@ -64,14 +79,8 @@ def load_and_chunk_file(file_path: str, original_filename: str) -> List[Document
     for doc in raw_docs:
         doc.metadata["source_filename"] = original_filename
 
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE,
-        chunk_overlap=CHUNK_OVERLAP,
-        length_function=len,
-        separators=["\n\n", "\n", ". ", " ", ""],
-    )
-
-    chunks = splitter.split_documents(raw_docs)
+    chunker = AgenticChunker()
+    chunks = chunker.split_documents(raw_docs)
     return chunks
 
 

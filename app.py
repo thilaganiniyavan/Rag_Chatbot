@@ -76,12 +76,12 @@ with st.sidebar:
 
     st.divider()
     st.subheader("Upload Documents")
-    st.caption("Supported: PDF, DOCX, TXT, CSV, JSON, HTML, MD, XLSX")
+    st.caption("Supported: PDF, DOCX, PPTX, TXT, CSV, JSON, XML, HTML, MD, XLSX, SQL, DB")
 
     uploaded = st.file_uploader(
         "Choose files",
         accept_multiple_files=True,
-        type=["pdf", "docx", "doc", "txt", "csv", "json", "html", "htm", "md", "markdown", "xlsx", "xls"],
+        type=["pdf", "docx", "doc", "txt", "csv", "json", "html", "htm", "md", "markdown", "xlsx", "xls", "pptx", "ppt", "xml", "sql", "db"],
         label_visibility="collapsed",
     )
 
@@ -206,11 +206,11 @@ if not st.session_state.chat_history:
         st.markdown('<div class="empty-state">', unsafe_allow_html=True)
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.info("** Step 1**\n\nUpload documents using the sidebar (PDF, DOCX, TXT, CSV, JSON, HTML, MD)")
+            st.info("Step 1\n\nUpload documents (PDF, DOCX, PPTX, TXT, CSV, JSON, XML, HTML, MD, SQL, DB)")
         with col2:
-            st.info("** Step 2**\n\nClick **Process & Index** to embed and store them in ChromaDB")
+            st.info("Step 2\n\nClick Process & Index to embed and store them (uses Agentic Chunking)")
         with col3:
-            st.info("** Step 3**\n\nAsk questions above — answers come only from your documents")
+            st.info("Step 3\n\nAsk questions above — answers come only from your documents")
         st.markdown('</div>', unsafe_allow_html=True)
     else:
         st.success(f"Knowledge base ready with {kb_count} chunks. Ask a question above!")

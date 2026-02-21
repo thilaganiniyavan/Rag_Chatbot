@@ -1,10 +1,3 @@
-"""
-RAG Chain: Strict knowledge-base-only RAG pipeline.
-
-The LLM is explicitly instructed to ONLY answer from the retrieved context.
-If the answer is not in the knowledge base, it will say so — no hallucination.
-"""
-
 import os
 from typing import Dict, Any, List
 
@@ -28,7 +21,7 @@ rules:
 3. Be concise and factual. Quote or paraphrase from the context directly.
 4. If the context partially answers the question, provide what you can and note the limitation.
 5. If the question is related to the document summary or the core idea of the document, go through all provided context chunks and summarize them instead of telling it is not present.
-6. If the answer is not present in the context, reply with "not present in the knowledge base.
+6. If the answer is not present in the context, reply with "not present in the knowledge base".
 
 Context:
 {context}
