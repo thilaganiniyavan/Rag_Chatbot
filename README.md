@@ -55,9 +55,4 @@ streamlit run app.py
 
 Access the application in your web browser at `http://127.0.0.1:8501`.
 
-## Development History
 
-This project underwent several key refinements:
-- Model upgrade from safety-focused prompt guards to high-performance Llama 3 systems for larger context support.
-- Dependency optimization for broader file format compatibility.
-- Streamlining of the codebase by removing experimental development notebooks.
