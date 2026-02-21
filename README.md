@@ -4,7 +4,7 @@ A Retrieval-Augmented Generation (RAG) system built with Streamlit, LangChain, a
 
 ## Features
 
-- Multi-format Document Support: Process and index PDF, DOCX, XLSX, and TXT files.
+- Multi-format Document Support.d TXT files.
 - Advanced Retrieval: Uses Maximal Marginal Relevance (MMR) to ensure diverse and relevant results.
 - Strict Groundedness: Answers are strictly derived from the provided context to minimize hallucinations.
 - Modern Web Interface: Built with Streamlit for a fast and interactive user experience.
